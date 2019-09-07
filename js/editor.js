@@ -6,34 +6,32 @@
 	const id = parseInt(location.search.slice(4))
 	const order = database.getOrder(id)
 
-	cardElement.innerHTML = cardElement.innerHTML.replace(/\%ID\%/g, order.id)//.replace(/\%DATE\%/g, order.Date)
+	cardElement.innerHTML = cardElement
+		.innerHTML
+		.replace(/\%ID\%/g, order.id)
+		.replace(/\%DATE\%/g, order.date)
 
-	const productElement = document.querySelector('#product')
-	const statusElement = document.querySelector('#status')
+	document.querySelector('#product').value = order.product
+	document.querySelector('#status').value = order.status
+	document.querySelector('#name').value = order.name
+	document.querySelector('#email').value = order.email
+	document.querySelector('#phone').value = order.phone
 
-	const nameElement = document.querySelector('#name')
-	const emailElement = document.querySelector('#email')
-	const phoneElement = document.querySelector('#phone')
-
-	productElement.value = order.product
-	statusElement.value = order.status
-	nameElement.value = order.name
-	emailElement.value = order.email
-	phoneElement.value = order.phone
-
-	document.querySelector('#save')
+	document
+		.querySelector('#save')
 		.addEventListener('click', function (event) {
 			event.preventDefault()
 
-			const updateOrder = {
-				product: productElement.value,
-				status: statusElement.value,
-				name: nameElement.value,
-				email: emailElement.value,
-				phone: phoneElement.value
+			const updatedOrder = {
+				product: document.querySelector('#product').value,
+				status: document.querySelector('#status').value,
+				name: document.querySelector('#name').value,
+				email: document.querySelector('#email').value,
+				phone: document.querySelector('#phone').value
 			}
-
-			const answer = database.updateOrder(id, updateOrder)
+			//database.updateOrder(id, updateOrder)
+			const answer = database.updateOrder(id, updatedOrder)
+console.log(database.updateOrder(id, updatedOrder))
 
 			if (answer) {
 				location.replace('02-crm-all-bids.html')
@@ -41,7 +39,7 @@
 				alert('Что-то пошло не так (')
 			}
 		})
-	console.log(order)
+	// console.log(getCount())
 	
 
 })();

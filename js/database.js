@@ -8,15 +8,18 @@
 	const api = {
 		addOrder(originalOrder) {
 			idCounter++
-
+			const moment = new Date(Date.now())
 			const order = Object.assign({
-				id: idCounter
+				id: idCounter,
+				date: getDateNormalize(moment),
 			}, originalOrder)
 
 			database.push(order)
 			save()
 		},
 
+	
+		
 		getList() {
 			//вщзвращаем копию массива database
 			return Array.from(database)
@@ -39,23 +42,24 @@
 					order = item
 					break
 				}
-
-				if (order === null) {
-					return false
-				}
-				for (const paramName of ['product', 'status', 'name', 'email', 'phone']) {
-					order[paramName] = updatedOrder[paramName]
-				}
-
-				save()
-
-				return true
 			}
+			if (order === null) {
+				return false
+			}
+
+			for (const paramName of ['product', 'status', 'name', 'email', 'phone']) {
+				order[paramName] = updatedOrder[paramName]
+			}
+
+			save()
+		
+			return true
 		}
 	}
 
 	load()
-
+// console.log(getCount())
+	
 	window.database = api
 
 	function save() {
@@ -70,13 +74,37 @@
 
 		database = JSON.parse(jsonVersion)
 
-		// idCounter = Math.max(...database.map(order => arder.id))
+		// idCounter = Math.max(...database.map(order => order.id))
 		for (const order of database) {
 			if (order.id > idCounter) {
 				idCounter = order.id
 			}
 		}
-
+		
+// console.log([...database.filter(order => order.status === 'Новые')].length)
 	}
+// console.log(getDateNormalize(1567878548933.getDate()))
+
+	function getDateNormalize (moment) {
+		const data = moment.getDate().toString().padStart(2, '0')
+		const month = (moment.getMonth() + 1).toString().padStart(2, '0')
+		const year = moment.getFullYear()
+
+		return data + '.' + month + '.' + year
+	}
+
+	function getСounter () {
+		// load()
+		let i = {}
+		// console.log(database.filter(order => order.status === 'Новые').length)
+		i.countAll = database.length,
+		i.countNew = [...database.filter(order => order.status === 'Новые')].length,
+		i.countWork = [...database.filter(order => order.status === 'В работе')].length,
+		i.countCloset = [...database.filter(order => order.status === 'Завершенные')].length,
+		i.countArhiv = [...database.filter(order => order.status === 'Архив')].length
+		return i
+	}
+	// console.log(load())
+	getСounter()
 
 })();

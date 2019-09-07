@@ -11,7 +11,7 @@
 				phone: document.querySelector('#phoneNumber').value,
 				email: document.querySelector('#email').value,
 				product: document.querySelector('#productTitle').value,
-				createAt: Date.now(),
+				// createAt: Date.now(),
 				status: 'Новые'
 			})
 			location.replace('02-crm-all-bids.html')
