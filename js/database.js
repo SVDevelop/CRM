@@ -18,8 +18,6 @@
 			save()
 		},
 
-	
-		
 		getList() {
 			//вщзвращаем копию массива database
 			return Array.from(database)
@@ -76,6 +74,32 @@
 			save()
 		
 			return true
+		},
+
+		getСounter () {
+			let i = {}
+			// console.log(database.filter(order => order.status === 'Новые').length)
+			i.countAll = database.length,
+			i.countNew = [...database.filter(order => order.status === 'Новые')].length,
+			i.countWork = [...database.filter(order => order.status === 'В работе')].length,
+			i.countCloset = [...database.filter(order => order.status === 'Завершенные')].length,
+			i.countArhiv = [...database.filter(order => order.status === 'Архив')].length
+			return i
+		},
+
+		getClassBadge (status) {
+			const badgeClasset = ['badge-danger', 'badge-warning', 'badge-success']
+			
+			if (status === 'Новые') {
+				return badgeClasset[0]
+			}
+			if (status === 'В работе') {
+				return badgeClasset[1]
+			}
+			if (status === 'Завершеные') {
+				return badgeClasset[2]
+			}
+			return ''
 		}
 
 	}
@@ -116,16 +140,16 @@
 		return data + '.' + month + '.' + year
 	}
 
-	function getСounter () {
-		let i = {}
-		// console.log(database.filter(order => order.status === 'Новые').length)
-		i.countAll = database.length,
-		i.countNew = [...database.filter(order => order.status === 'Новые')].length,
-		i.countWork = [...database.filter(order => order.status === 'В работе')].length,
-		i.countCloset = [...database.filter(order => order.status === 'Завершенные')].length,
-		i.countArhiv = [...database.filter(order => order.status === 'Архив')].length
-		return i
-	}
-	getСounter()
+	// function getСounter () {
+	// 	let i = {}
+	// 	// console.log(database.filter(order => order.status === 'Новые').length)
+	// 	i.countAll = database.length,
+	// 	i.countNew = [...database.filter(order => order.status === 'Новые')].length,
+	// 	i.countWork = [...database.filter(order => order.status === 'В работе')].length,
+	// 	i.countCloset = [...database.filter(order => order.status === 'Завершенные')].length,
+	// 	i.countArhiv = [...database.filter(order => order.status === 'Архив')].length
+	// 	return i
+	// }
+	// getСounter()
 
 })();

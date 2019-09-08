@@ -10,12 +10,12 @@
 			<td>%EMAIL%</td>
 			<td>%PHONE%</td>
 			<td>
-				<div class="badge badge-pill badge-danger">%STATUS%</div>
+				<div class="badge badge-pill %BADGE%">%STATUS%</div>
 			</td>
 			<td><a href="03-crm-edit-bid.html?id=%ID%">Редактировать</a></td>
 		</tr>`
 	const ulElementTemplate = `
-		<li><a href="#" class="active">Все вместе <div class="badge">%COUNT%</div></a></li>
+		<li><a href="#">Все вместе <div class="badge">%COUNT%</div></a></li>
 		<li><a href="#">Новые <div class="badge">%COUNT_NEW%</div></a></li>
 		<li><a href="#">В работе <div class="badge">%COUNT_WORK%</div></a></li>
 		<li><a href="#">Завершенные <div class="badge">%COUNT_CLOSE%</div></a></li>
@@ -40,20 +40,31 @@
 			filters.product = this.value || false
 			update()
 		})
-
-	const statusElement = document.querySelector('#status').children
-	
-	for (const status of statusElement) {
-		status.addEventListener('click', function () {
-			// console.log(this.textContent)
-			
+// statusFiltred
+	for (const status of document.querySelector('#status').children) {
+		status.addEventListener('click', function (event) {
+			event.preventDefault()
 			filters.status = this.textContent || false
-			console.log(filters.status)
-			
 			update()
 		})
 	}
-		
+
+	for (const status of statusApplication.children) {
+		status.querySelector('a').addEventListener('click', function (event) {
+			event.preventDefault()
+			for (const item of this.parentElement.parentElement.children) {
+				if (item.children[0] === this) {
+					item.children[0].classList.add("active")
+				} else {
+					item.children[0].classList.remove("active")
+				}
+				
+			}
+			//!!! filters.status = this.innerText.slice(0, this.innerText.search(/\d/) > 0 ? this.innerText.search(/\d/) : undefined).trim() || false
+			// update()
+			
+		})
+	}
 
 	function update () {
 		let orders = database.getList()
@@ -65,81 +76,44 @@
 		if (filters.status !== false && filters.status !== 'Все') {
 			orders = orders.filter(order => order.status === filters.status)
 		}
-	// console.log(statusApplicationElement)
 	
 		ordersTabel.innerHTML = ''
 		
-		
 		for (const order of orders) {
 			const trElement = document.createElement('tr')
-			// const moment = new Date(order.createAt)
-			
-			// let statusApplicationCount = {
-			// 	we: 0,
-			// 	work: 0,
-			// 	close: 0,
-			// 	arhiv: 0
-			// }
-			// let i = 0
-			// // console.log(order.status)
-			// if (order.status === 'Новые') {
-			// 	i++
-			// 	// console.log(statusApplicationCount.we)
-			// }
-			// switch (order.status) {
-			// 	case 'Новые':
-			// 		statusApplicationCount.new += 1
-			// console.log(typeof(statusApplicationCount.new))
 
-			// 	break
-			// 	case 'В работе':
-			// 		statusApplicationCount.work++
-			// 	break
-			// 	case 'Завершенные':
-			// 		statusApplicationCount.close++
-			// 	break
-			// 	case 'Архив':
-			// 		statusApplicationCount.arhiv++
-			// 	break
-			// 	default:
-			// 	orders.length
-			// 	break
-			// }
-
-
-			//countAll: database.length,
-// 		countNew: [...database.filter(order => order.status === 'Новые')].length,
-// 		countWork: [...database.filter(order => order.status === 'В работе')].length,
-// 		countCloset: [...database.filter(order => order.status === 'Завершенные')].length,
-// 		countArhiv: [...database.filter(order => order.status === 'Архив')].length
-
-			
 			trElement.innerHTML = trElementTemplate
 				.replace(/\%ID\%/g, order.id)
 				.replace('%COURSE_TITLE%', order.product)
 				.replace('%NAME%', order.name)
 				.replace('%EMAIL%', order.email)
 				.replace('%PHONE%', order.phone)
-				// .replace('%DATE%', getDateNormalize(moment))
+				.replace('%BADGE%', database.getClassBadge(order.status) || '')
 				.replace('%DATE%', order.date)
 				.replace('%STATUS%', order.status)
 
 			statusApplicationElement.innerHTML = ulElementTemplate
-				.replace('%COUNT%', 1)
-				.replace('%COUNT_NEW%', )
-				.replace('%COUNT_WORK%', )
-				.replace('%COUNT_CLOSE%', )
-				.replace('%COUNT_ARHIV%', )
+				.replace('%COUNT%', database.getСounter().countAll || '')
+				.replace('%COUNT_NEW%', database.getСounter().countNew || '')
+				.replace('%COUNT_WORK%', database.getСounter().countWork || '')
+				.replace('%COUNT_CLOSE%', database.getСounter().countCloset || '')
+				.replace('%COUNT_ARHIV%', database.getСounter().countArhiv || '')
 			
 			ordersTabel.append(trElement)
-			// statusApplication.append(liElement)
-			// console.log(statusApplicationCount.we)
 			
 
 		}
+		console.log()
 
 	}
 
+	function statusFiltred () {
+			
+		filters.status = this.textContent || false
+		// console.log(filters.status)
+		
+		update()
+	}
 	// function getDateNormalize (moment) {
 	// 	const data = moment.getDate().toString().padStart(2, '0')
 	// 	const month = (moment.getMonth() + 1).toString().padStart(2, '0')
@@ -147,40 +121,5 @@
 
 	// 	return data + '.' + month + '.' + year
 	// }
-
-	function getCount () {
-		console.log(orders)
-		
-	}
-	
-	// function getStatusCount (order) {
-	// 	const statusApplicationCount = {
-	// 		new: 0,
-	// 		work: 0,
-	// 		close: 0,
-	// 		arhiv: 0
-	// 	}
-	// 	// console.log(order.status)
-	// 	switch (order.status) {
-	// 		case 'Новые':
-	// 			statusApplicationCount.new++
-	// 		break
-	// 		case 'В работе':
-	// 			statusApplicationCount.work++
-	// 		break
-	// 		case 'Завершенные':
-	// 			statusApplicationCount.close++
-	// 		break
-	// 		case 'Архив':
-	// 			statusApplicationCount.arhiv++
-	// 		break
-	// 		default:
-	// 		orders.length
-	// 		break
-	// 	}
-	// 	return statusApplicationCount
-	// }
-	// console.log(database.getCount)
-
 
 })();

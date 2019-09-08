@@ -4,11 +4,21 @@
 	const cardElement = document.querySelector('#card')
 	const id = parseInt(location.search.slice(4))
 	const order = database.getOrder(id)
+	const count = database.getСounter()
+	const listStatusElement = document.querySelector('#listStatus')
 
 	cardElement.innerHTML = cardElement
 		.innerHTML
 		.replace(/\%ID\%/g, order.id)
 		.replace(/\%DATE\%/g, order.date)
+
+	listStatusElement.innerHTML = listStatusElement.innerHTML
+		.replace('%COUNT_ALL%', count.countAll || '')
+		.replace('%COUNT_NEW%', count.countNew || '')
+		.replace('%COUNT_WORK%', count.countWork || '')
+		.replace('%COUNT_CLOSE%', count.countCloset || '')
+		.replace('%COUNT_ARHIV%', count.countArhiv || '')
+
 
 	document.querySelector('#product').value = order.product
 	document.querySelector('#status').value = order.status
@@ -33,7 +43,7 @@
 				alert('Что-то пошло не так (')
 			}
 		})
-	console.log(database)
+
 	document
 		.querySelector('#delete')
 		.addEventListener('click', function (event) {
