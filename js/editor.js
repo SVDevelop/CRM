@@ -33,13 +33,17 @@
 				alert('Что-то пошло не так (')
 			}
 		})
-	// console.log(getCount())
+	console.log(database)
 	document
 		.querySelector('#delete')
 		.addEventListener('click', function (event) {
 			event.preventDefault()
 			
-			
+			if (database.deleteOrder(id)) {
+				location.replace('02-crm-all-bids.html')
+			}else {
+				alert('Что-то пошло не так (')
+			}	
 		})
 
 })();

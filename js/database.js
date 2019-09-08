@@ -46,7 +46,7 @@
 			if (order === null) {
 				return false
 			}
-
+		
 			for (const paramName of ['product', 'status', 'name', 'email', 'phone']) {
 				order[paramName] = updatedOrder[paramName]
 			}
@@ -54,11 +54,33 @@
 			save()
 		
 			return true
+		
+		},
+
+		deleteOrder (id) {
+			let order = null
+			let item = null
+
+			for( let i = 0; i < database.length; i++) {
+				if (database[i][id] === id) {
+					item = i
+					break
+				}
+			}
+			if (order === null) {
+				return false
+			}
+			database.splice(item, 1)
+			// del(i)
+
+			save()
+		
+			return true
 		}
+
 	}
 
 	load()
-// console.log(getCount())
 	
 	window.database = api
 
@@ -80,10 +102,11 @@
 				idCounter = order.id
 			}
 		}
-		
-// console.log([...database.filter(order => order.status === 'Новые')].length)
 	}
-// console.log(getDateNormalize(1567878548933.getDate()))
+
+	// function del (i) {
+	// 	database.splice(i, 1)
+	// }
 
 	function getDateNormalize (moment) {
 		const data = moment.getDate().toString().padStart(2, '0')
@@ -94,7 +117,6 @@
 	}
 
 	function getСounter () {
-		// load()
 		let i = {}
 		// console.log(database.filter(order => order.status === 'Новые').length)
 		i.countAll = database.length,
@@ -104,7 +126,6 @@
 		i.countArhiv = [...database.filter(order => order.status === 'Архив')].length
 		return i
 	}
-	// console.log(load())
 	getСounter()
 
 })();
