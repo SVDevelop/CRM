@@ -1,4 +1,5 @@
-;(function () {
+;
+(function () {
 	'use strict'
 
 	const trElementTemplate = `
@@ -15,11 +16,11 @@
 			<td><a href="03-crm-edit-bid.html?id=%ID%">Редактировать</a></td>
 		</tr>`
 	const ulElementTemplate = `
-		<li><a href="#">Все вместе <div class="badge">%COUNT%</div></a></li>
-		<li><a href="#">Новые <div class="badge">%COUNT_NEW%</div></a></li>
-		<li><a href="#">В работе <div class="badge">%COUNT_WORK%</div></a></li>
-		<li><a href="#">Завершенные <div class="badge">%COUNT_CLOSE%</div></a></li>
-		<li><a href="#">Архив <div class="badge">%COUNT_ARHIV%</div></a></li>`
+		<li><a href="#" data-filter="Все">Все вместе <div class="badge">%COUNT%</div></a></li>
+		<li><a href="#" data-filter="Новые">Новые <div class="badge">%COUNT_NEW%</div></a></li>
+		<li><a href="#" data-filter="В работе">В работе <div class="badge">%COUNT_WORK%</div></a></li>
+		<li><a href="#" data-filter="Завершенные">Завершенные <div class="badge">%COUNT_CLOSE%</div></a></li>
+		<li><a href="#" data-filter="Архив">Архив <div class="badge">%COUNT_ARHIV%</div></a></li>`
 
 	const ordersTabel = document.querySelector('#ordersTabel')
 	const statusApplicationElement = document.querySelector('#statusApplication')
@@ -31,19 +32,20 @@
 		email: false,
 		phone: false
 	}
-	
-	update ()
-	
+
+	update()
+
 
 	document.querySelector('#products')
 		.addEventListener('click', function () {
 			filters.product = this.value || false
 			update()
 		})
-// statusFiltred
+	// statusFiltred
 	for (const status of document.querySelector('#status').children) {
 		status.addEventListener('click', function (event) {
 			event.preventDefault()
+			event.stopPropagation()
 			filters.status = this.textContent || false
 			update()
 		})
@@ -52,23 +54,31 @@
 	for (const status of statusApplication.children) {
 		status.querySelector('a').addEventListener('click', function (event) {
 			event.preventDefault()
+			event.stopPropagation()
+			event.stopImmediatePropagation()
+
 			for (const item of this.parentElement.parentElement.children) {
 				if (item.children[0] === this) {
 					item.children[0].classList.add("active")
+					filters.status = this.getAttribute('data-filter') || false
+
 				} else {
 					item.children[0].classList.remove("active")
 				}
-				
+
 			}
+			// update()
+console.log(filters.status)
+
 			//!!! filters.status = this.innerText.slice(0, this.innerText.search(/\d/) > 0 ? this.innerText.search(/\d/) : undefined).trim() || false
 			// update()
-			
+
 		})
 	}
 
-	function update () {
+	function update() {
 		let orders = database.getList()
-	
+
 		if (filters.product !== false) {
 			orders = orders.filter(order => order.product === filters.product)
 		}
@@ -76,9 +86,9 @@
 		if (filters.status !== false && filters.status !== 'Все') {
 			orders = orders.filter(order => order.status === filters.status)
 		}
-	
+
 		ordersTabel.innerHTML = ''
-		
+
 		for (const order of orders) {
 			const trElement = document.createElement('tr')
 
@@ -98,20 +108,20 @@
 				.replace('%COUNT_WORK%', database.getСounter().countWork || '')
 				.replace('%COUNT_CLOSE%', database.getСounter().countCloset || '')
 				.replace('%COUNT_ARHIV%', database.getСounter().countArhiv || '')
-			
+
 			ordersTabel.append(trElement)
-			
+
 
 		}
 		console.log()
 
 	}
 
-	function statusFiltred () {
-			
+	function statusFiltred() {
+
 		filters.status = this.textContent || false
 		// console.log(filters.status)
-		
+
 		update()
 	}
 	// function getDateNormalize (moment) {
