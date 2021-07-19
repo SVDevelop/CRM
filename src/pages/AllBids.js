@@ -1,8 +1,30 @@
-import React from "react"
+import React, {useEffect} from "react"
+import { useCallback } from "react"
+import { useState } from "react"
+import { useSelector } from "react-redux"
 import Bid from "../components/Bid"
+import Filter from "../components/Fiter"
 
 export default function AllBids () {
-    return (
+    const [filter, setFilter] = useState('Все')
+    const binds = useSelector(state => state.binds.bindsList)
+    const filterBinds = () => {
+        if (filter === "Все") {
+            return binds
+        }
+        return binds.filter(bind => bind.status === filter )
+    }
+    const change = (e) => {
+        e.preventDefault()
+        // if (e.target.name === "Все") {
+        //     return
+        // }
+        console.log(e.target.name)
+        setFilter(e.target.name)
+    }
+    console.log(binds)
+    // useEffect(() => console.log(filter), [])
+    return useCallback(
         <div className="body--dashboard">
 
             {/* <!-- left-panel --> */}
@@ -64,34 +86,7 @@ export default function AllBids () {
 
                     <div className="admin-heading-1">Все заявки</div>
 
-                    <form action="">
-                        {/* <!-- <div className="form-row"> --> */}
-                        <div className="row mb-3 justify-content-start">
-                            {/* <!-- Col --> */}
-                            <div className="col">
-                                <div className="btn-group" role="group" aria-label="..." id="status">
-                                    <a href="/" className="btn btn-light">Все</a>
-                                    <a href="/" className="btn btn-light">Новые</a>
-                                    <a href="/" className="btn btn-light">В работе</a>
-                                    <a href="/" className="btn btn-light">Завершенные</a>
-                                    <a href="/" className="btn btn-light">Архив</a>
-                                </div>
-                            </div>
-                            {/* <!-- // Col -->
-                            <!-- Col --> */}
-                            <div className="col">
-                                <select className="custom-select" id="products">
-                                    <option value="" selected>Все продукты</option>
-                                    <option value="Курс по верстке">Курс по верстке</option>
-                                    <option value="Курс по JavaScript">Курс по JavaScript</option>
-                                    <option value="Курс по VUE JS">Курс по VUE JS</option>
-                                    <option value="Курс по PHP">Курс по PHP</option>
-                                    <option value="Курс по WordPress">Курс по WordPress</option>
-                                </select>
-                            </div>
-                            {/* <!-- // Col --> */}
-                        </div>
-                    </form>
+                    <Filter change={change}/>
 
                     <table className="table fs-14">
                         <thead>
@@ -108,7 +103,7 @@ export default function AllBids () {
                         </thead>
                         <tbody id="ordersTabel">
                             {
-                                createBid().map(bid => (<Bid {...bid} />))
+                                filterBinds().map((bid, i) => (<Bid key={i} {...bid} />))
                             }
                         </tbody>
                     </table>
@@ -122,27 +117,4 @@ export default function AllBids () {
             <script src="js/main.js"></script> */}
         </div>
     )
-}
-
-function createBid () {
-    return [
-        {
-            id: 1,
-            date: '01.08.2019',
-            product: 'Курс по верстке',
-            name: 'Юрий',
-            email: 'info@rightblog.ru',
-            phone: '+7 (909) 77-55-777',
-            status: 'Новый'
-        },
-        {
-            id: 2,
-            date: '01.08.2019',
-            product: 'Курс по верстке',
-            name: 'Юрий',
-            email: 'info@rightblog.ru',
-            phone: '+7 (909) 77-55-777',
-            status: 'В работе'
-        },
-    ]
 }
