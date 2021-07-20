@@ -1,4 +1,5 @@
-
+import React, { useState } from 'react';
+import {useDispatch} from 'react-redux'
 
 export default function Bid ({
     id, 
@@ -23,7 +24,15 @@ export default function Bid ({
                     {status}
                 </div>
             </td>
-            <td><a href="03-crm-edit-bid.html">Редактировать</a></td>
+            <td>
+                <a 
+                href="03-crm-edit-bid.html"
+                onClick={(e)=> {
+                    e.preventDefault()
+
+                    // useDispatch()
+                }}
+                >Редактировать</a></td>
         </tr>
     )
 }

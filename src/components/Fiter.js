@@ -1,13 +1,11 @@
+import React, {useState} from 'react'
 
-import { useDispatch } from "react-redux"
 
-export default function Filter ({change}) {
-
+export default function Filter ({change, setFilterSelect}) {
+    const [value, setValue] = useState('')
     return (
         <form action="">
-                        {/* <!-- <div className="form-row"> --> */}
             <div className="row mb-3 justify-content-start">
-                {/* <!-- Col --> */}
                 <div className="col">
                     <div className="btn-group" role="group" aria-label="..." id="status">
                         <a href="/" className="btn btn-light" name="Все" onClick={change}>Все</a>
@@ -17,9 +15,18 @@ export default function Filter ({change}) {
                         <a href="/" className="btn btn-light" name="Архив" onClick={change}>Архив</a>
                     </div>
                 </div>
-                {/* <!-- // Col -->
+
                 <div className="col">
-                    <select className="custom-select" id="products">
+                    <select 
+                        className="custom-select" 
+                        id="products" 
+                        name="product"
+                        value={value}
+                        onChange={(e)=>{
+                            setValue(e.target.value)
+                            setFilterSelect(e.target.value)
+                        }}
+                    >
                         <option value="" selected>Все продукты</option>
                         <option value="Курс по верстке">Курс по верстке</option>
                         <option value="Курс по JavaScript">Курс по JavaScript</option>
@@ -28,7 +35,6 @@ export default function Filter ({change}) {
                         <option value="Курс по WordPress">Курс по WordPress</option>
                     </select>
                 </div>
-                {/* <!-- // Col --> */}
             </div>
         </form>
     )

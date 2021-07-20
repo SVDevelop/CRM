@@ -24,6 +24,15 @@ const initState = {
             phone: '+7 (909) 77-55-777',
             status: 'В работе'
         },
+        {
+            id: 3,
+            date: '01.08.2019',
+            product: 'Курс по VUE JS',
+            name: 'Юрий',
+            email: 'info@rightblog.ru',
+            phone: '+7 (909) 77-55-777',
+            status: 'В работе'
+        },
     ] //{id: 1, todo: "dasdas", selected: false, done: false, filtersVisible: true}
 };
 

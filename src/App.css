@@ -177,6 +177,9 @@ body {
   background-color: #2865B1;
   color: #FFF;
 }
+.badge {
+  color: #383a3b;
+}
 .left-panel__navigation .badge {
   background-color: #2865B1;
   color: #fff;
@@ -756,4 +759,14 @@ body {
 }
 .strong {
   font-weight: 700;
+}
+
+.modal {
+  /* position: absolute; */
+  border:2px solid rgba(47, 128, 214, 0.71);
+  height: 300px;
+  width: 100px;
+  /* left: 50%;
+  top: 50%;
+  z-index: 999; */
 }
