@@ -1,9 +1,13 @@
+
+import {useDispatch} from 'react-redux'
+import {addBid} from '../store/action'
 import useInput from './../hooks/useInput'
 
 export default function AppForm () {
-
+	const dispacth = useDispatch()
 	const submit = () => {
-		console.log(value);
+		// sdf
+		dispacth(addBid(value));
 	}
 	const {value, onChange} = useInput({
 		name: '',

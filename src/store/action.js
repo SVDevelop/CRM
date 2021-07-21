@@ -1,14 +1,22 @@
-import {ADD, DELETE, UPDATE, SELECTED, SELECTED_ALL, DONE, DELETE_SELECTED, DONE_SELECTED} from "./bollerplate";
+import {ADD, DELETE, UPDATE, SELECTED, SELECTED_ALL, DONE, DELETE_SELECTED, DONE_SELECTED, SET_FILTER} from "./bollerplate";
 import { v4 as uuid } from 'uuid'
 
 
-export const addTodo = (value) => ({
+export const addBid = ({
+    name,
+    phone,
+    email,
+    product
+}) => ({
     type: ADD,
     payload: {
         id: uuid(),
-        text: value,
-        selected: false,
-        done: false
+        date: new Date(),
+        status: 'Новые',
+        name,
+        phone,
+        email,
+        product
     }
 })
 
@@ -50,3 +58,5 @@ export const deleteTodoSelected = () => ({
 export const doneTodoSelected = () => ({
     type: DONE_SELECTED,
 })
+
+export const setFilter = () => ({type: SET_FILTER })

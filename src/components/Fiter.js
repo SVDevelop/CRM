@@ -1,7 +1,9 @@
-import React, {useState} from 'react'
+import { useState } from 'react'
+
 
 
 export default function Filter ({change, setFilterSelect}) {
+    // const {value, onChange} = useInput({value: ''})
     const [value, setValue] = useState('')
     return (
         <form action="">

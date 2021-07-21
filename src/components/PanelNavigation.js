@@ -1,9 +1,7 @@
 
-import { useDispatch, useSelector} from 'react-redux'
 
 export default function PanelNavigation ({change}) {
 
-    // const 
 
     return (
         <div className="left-panel__navigation">
@@ -15,9 +13,10 @@ export default function PanelNavigation ({change}) {
                 name="Все"
                 onClick={change}
                 >Все вместе</a></li>
-                <li><a href="/">Новые <div className="badge"
-                name="Новые"
-                onClick={change}
+                <li><a href="/"
+                    name="Новые"
+                    onClick={change}
+                >Новые <div className="badge"
                 >12</div></a></li>
                 <li><a href="/"
                 name="В работе"

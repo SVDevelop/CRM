@@ -18,7 +18,7 @@ function App() {
       <Router >
 
         <Switch >
-          {/* <Route path="/"><AppForm /></Route> */}
+          <Route path="/"><AppForm /></Route>
           <Route />
           <Route />
           <Route />
