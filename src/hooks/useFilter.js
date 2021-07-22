@@ -1,9 +1,11 @@
-import { useState, useCallback } from 'react';
-import {useSelector} from 'react-redux'
+// import { useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+// import { setFilter } from '../store/action'
 
 
 export function useFilter () {
-    const [filter, setFilter] = useState('Все')
+    const filter = useSelector(state => state.filter.flagFilter)
+    // const dispacth = useDispatch()
     const binds = useSelector(state => state.binds.bindsList)
     
     const filterBinds = (product='') => {
@@ -11,19 +13,17 @@ export function useFilter () {
             return binds
         }
         if (!product) {
-            console.log('no select');
             return binds.filter(bind => bind.status === filter )
         }
-        console.log(`select: ${product}`)
         return binds.filter(bind => bind.status === filter )
                     .filter(bind => bind.product === product)
     }
 
-    const change = useCallback((e) => {
-        e?.preventDefault()
+    // const change = useCallback((e) => {
+    //     e?.preventDefault()
         
-        setFilter(e.target.name)
-    }, [])
+    //     dispacth(setFilter(e.target.name))
+    // }, [])
 
-    return  {filterBinds, change}
+    return  {filterBinds}
 }

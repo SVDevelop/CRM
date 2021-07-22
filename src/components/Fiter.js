@@ -1,20 +1,26 @@
 import { useState } from 'react'
+import {setFilter} from '../store/action'
+import {useDispatch} from 'react-redux'
 
 
 
-export default function Filter ({change, setFilterSelect}) {
-    // const {value, onChange} = useInput({value: ''})
+const Filter = ({setFilterSelect}) => {
     const [value, setValue] = useState('')
+    const dispacth = useDispatch()
+    const handlerClick = (e) => {
+        e?.preventDefault()
+        dispacth(setFilter(e.target.name))
+    }
     return (
         <form action="">
             <div className="row mb-3 justify-content-start">
                 <div className="col">
                     <div className="btn-group" role="group" aria-label="..." id="status">
-                        <a href="/" className="btn btn-light" name="Все" onClick={change}>Все</a>
-                        <a href="/" className="btn btn-light" name="Новые" onClick={change}>Новые</a>
-                        <a href="/" className="btn btn-light" name="В работе" onClick={change}>В работе</a>
-                        <a href="/" className="btn btn-light" name="Завершенные" onClick={change}>Завершенные</a>
-                        <a href="/" className="btn btn-light" name="Архив" onClick={change}>Архив</a>
+                        <a href="/" className="btn btn-light" name="Все" onClick={handlerClick}>Все</a>
+                        <a href="/" className="btn btn-light" name="Новые" onClick={handlerClick}>Новые</a>
+                        <a href="/" className="btn btn-light" name="В работе" onClick={handlerClick}>В работе</a>
+                        <a href="/" className="btn btn-light" name="Завершенные" onClick={handlerClick}>Завершенные</a>
+                        <a href="/" className="btn btn-light" name="Архив" onClick={handlerClick}>Архив</a>
                     </div>
                 </div>
 
@@ -26,7 +32,7 @@ export default function Filter ({change, setFilterSelect}) {
                         value={value}
                         onChange={(e)=>{
                             setValue(e.target.value)
-                            setFilterSelect(e.target.value)
+                            dispacth(setFilter(e.target.value))
                         }}
                     >
                         <option value="" selected>Все продукты</option>
@@ -41,3 +47,5 @@ export default function Filter ({change, setFilterSelect}) {
         </form>
     )
 }
+
+export default Filter

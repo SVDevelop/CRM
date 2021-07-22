@@ -4,21 +4,15 @@ import Modal from "../components/Modal"
 import {useFilter} from '../hooks/useFilter'
 
 export default function AllBids () {
-    // const [filter, setFilter] = useState('Все')
 
-    // const change = useCallback((e) => {
-    //     e?.preventDefault()
-        
-    //     setFilter(e.target.name)
-    // }, [])
-        const {filterBinds, change} = useFilter()
+        const {filterBinds} = useFilter()
 
     return (
         <div className="body--dashboard">
-            <LeftPanel  change={change} />
+            <LeftPanel />
             <MainWrapper 
                 filterBinds={filterBinds}
-                change={change} />
+            />
         </div>
     )
 }

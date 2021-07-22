@@ -1,6 +1,6 @@
+import {memo} from 'react'
 
-
-export default function User () {
+const User = memo(() => {
 
     return (
         <div className="left-panel__user clearfix">
@@ -12,4 +12,6 @@ export default function User () {
             </div>
         </div>
     )
-}
+})
+
+export default User

@@ -4,14 +4,12 @@ import Filter from "./Fiter"
 
 interface Iprops {
     filterBinds:(arg: string)=>[{}]
-    change:(e:Event)=>void
 }
 
-function MainWrapper ({filterBinds, change}:Iprops) {
+function MainWrapper ({filterBinds }:Iprops) {
     
     const [selectFilter, setSelectFilter] = useState('')
     const bids:[Object] = filterBinds(selectFilter)
-    console.log(bids);
     
     return (
         <div className="main-wrapper">
@@ -20,7 +18,7 @@ function MainWrapper ({filterBinds, change}:Iprops) {
                     <div className="admin-heading-1">Все заявки</div>
 
                     <Filter 
-                        change={change} setFilterSelect={setSelectFilter} 
+                        setFilterSelect={setSelectFilter} 
                     />
 
                     <table className="table fs-14">

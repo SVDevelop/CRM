@@ -2,8 +2,9 @@
 import PanelNavigation from './PanelNavigation'
 import User from './User'
 import Logo from './Logo'
+import { memo } from 'react'
 
-export default function LeftPanel ({change}) {
+const LeftPanel = memo(() => {
     return (
         <div className="left-panel blue-skin">
 
@@ -11,7 +12,7 @@ export default function LeftPanel ({change}) {
 
                 <User />
 
-                <PanelNavigation change={change} />
+                <PanelNavigation />
                 
                 <div className="left-panel__navigation">
                     <div className="left-panel__navigation-title">
@@ -31,4 +32,6 @@ export default function LeftPanel ({change}) {
 
         </div>
     )
-}
+})
+
+export default LeftPanel

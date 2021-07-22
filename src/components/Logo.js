@@ -1,6 +1,6 @@
-import React from 'react';
+import { memo } from 'react';
 
-const Logo = () => {
+const Logo = memo(() => {
     return (
         <div>
             <div className="left-panel__logo">
@@ -9,6 +9,6 @@ const Logo = () => {
                 </div>
         </div>
     );
-};
+})
 
 export default Logo;
