@@ -1,4 +1,4 @@
-import {ADD, DELETE, UPDATE, SELECTED, SELECTED_ALL, DONE, DELETE_SELECTED, DONE_SELECTED, SET_FILTER} from "./bollerplate";
+import {ADD, DELETE, UPDATE, SELECTED, SELECTED_ALL, DONE, DELETE_SELECTED, DONE_SELECTED, SET_FILTER, SET_FILTER_PRODUCT} from "./bollerplate";
 import { v4 as uuid } from 'uuid'
 
 
@@ -60,3 +60,4 @@ export const doneTodoSelected = () => ({
 })
 
 export const setFilter = (value) => ({type: SET_FILTER, payload: value })
+export const setFilterProduct = (value) => ({type: SET_FILTER_PRODUCT, payload: value })

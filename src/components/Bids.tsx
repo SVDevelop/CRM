@@ -1,11 +1,12 @@
-import React from 'react';
 import Bid from './Bid'
+import {useFilter} from '../hooks/useFilter'
 
-const Bids = ({filterBinds}:[] | any) => {
-
+const Bids = () => {
+    const filterBids = useFilter()
+    
     return (
         <>
-            {filterBinds.map((bid:Object, i:number) => <Bid key={i} {...bid} />)}
+            {filterBids.map((bid, i) => <Bid key={i} {...bid} />)}
         </>    
     )
 };

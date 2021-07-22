@@ -1,9 +1,8 @@
 import {useCallback} from 'react'
 import {setFilter} from '../store/action'
 import {useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
 
-export default function PanelNavigation () {
+const PanelNavigation = () => {
     const filter = useSelector(state => state.filter.flagFilter)
     const bindsBadge = useSelector(state => state.binds.bindsList)
     const dispacth = useDispatch()
@@ -86,3 +85,5 @@ export default function PanelNavigation () {
         </div>
     )
 }
+
+export default PanelNavigation

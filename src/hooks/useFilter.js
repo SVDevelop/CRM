@@ -1,29 +1,34 @@
-// import { useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux'
-// import { setFilter } from '../store/action'
+import { useSelector } from 'react-redux'
 
 
 export function useFilter () {
     const filter = useSelector(state => state.filter.flagFilter)
-    // const dispacth = useDispatch()
+    const product = useSelector(state => state.filter.product)
     const binds = useSelector(state => state.binds.bindsList)
-    
-    const filterBinds = (product='') => {
-        if (filter === "Все") {
-            return binds
-        }
-        if (!product) {
-            return binds.filter(bind => bind.status === filter )
-        }
-        return binds.filter(bind => bind.status === filter )
-                    .filter(bind => bind.product === product)
-    }
-
-    // const change = useCallback((e) => {
-    //     e?.preventDefault()
         
-    //     dispacth(setFilter(e.target.name))
-    // }, [])
+        const products = [
+            'Курс по верстке',        
+            'Курс по JavaScript',    
+            'Курс по VUE JS',
+            'Курс по PHP',
+            'Курс по WordPress'
+        ]
+        
 
-    return  {filterBinds}
+        const filterBinds = () => {
+            if (filter === "Все" && (!product.includes(product) || product === 'Все продукты')) {
+                return binds
+            }
+            if (filter === "Все" && products.includes(product)) {
+                return binds
+                        .filter(bind => bind.status)
+                        .filter(bind => bind.product === product)
+            } else if (filter !== "Все" && products.includes(product)) {
+                return binds
+                    .filter(bind => bind.product === product)
+                    .filter(bind => bind.status === filter)
+            }
+            return binds.filter(bind => bind.status === filter)
+        }
+    return  [...filterBinds()]
 }

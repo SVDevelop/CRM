@@ -1,15 +1,7 @@
-import { useState } from 'react'
 import Bids from "./Bids"
 import Filter from "./Fiter"
 
-interface Iprops {
-    filterBinds:(arg: string)=>[{}]
-}
-
-function MainWrapper ({filterBinds }:Iprops) {
-    
-    const [selectFilter, setSelectFilter] = useState('')
-    const bids:[Object] = filterBinds(selectFilter)
+function MainWrapper () {
     
     return (
         <div className="main-wrapper">
@@ -17,9 +9,7 @@ function MainWrapper ({filterBinds }:Iprops) {
 
                     <div className="admin-heading-1">Все заявки</div>
 
-                    <Filter 
-                        setFilterSelect={setSelectFilter} 
-                    />
+                    <Filter />
 
                     <table className="table fs-14">
                         <thead>
@@ -35,7 +25,7 @@ function MainWrapper ({filterBinds }:Iprops) {
                             </tr>
                         </thead>
                         <tbody id="ordersTabel">
-                            <Bids filterBinds={bids} />
+                            <Bids />
                         </tbody>
                     </table>
 

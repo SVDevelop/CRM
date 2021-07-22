@@ -1,16 +1,18 @@
-import { useState } from 'react'
-import {setFilter} from '../store/action'
-import {useDispatch} from 'react-redux'
+import {useState} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import {setFilter, setFilterProduct} from '../store/action'
 
+const Filter = () => {
+    
+    const productFilter = useSelector(state => state.filter.product)
+    const [product, setProduct] = useState(productFilter)
 
-
-const Filter = ({setFilterSelect}) => {
-    const [value, setValue] = useState('')
     const dispacth = useDispatch()
     const handlerClick = (e) => {
         e?.preventDefault()
         dispacth(setFilter(e.target.name))
     }
+
     return (
         <form action="">
             <div className="row mb-3 justify-content-start">
@@ -29,13 +31,13 @@ const Filter = ({setFilterSelect}) => {
                         className="custom-select" 
                         id="products" 
                         name="product"
-                        value={value}
+                        value={product}
                         onChange={(e)=>{
-                            setValue(e.target.value)
-                            dispacth(setFilter(e.target.value))
+                            dispacth(setFilterProduct(e.target.value))
+                            setProduct(e.target.value)
                         }}
                     >
-                        <option value="" selected>Все продукты</option>
+                        <option defaultValue="Все продукты">Все продукты</option>
                         <option value="Курс по верстке">Курс по верстке</option>
                         <option value="Курс по JavaScript">Курс по JavaScript</option>
                         <option value="Курс по VUE JS">Курс по VUE JS</option>

@@ -1,5 +1,5 @@
 import {combineReducers} from "redux";
-import {ADD, UPDATE, DELETE, SELECTED, SELECTED_ALL, DONE, DELETE_SELECTED, DONE_SELECTED, SET_FILTER } from "./bollerplate";
+import {ADD, UPDATE, DELETE, SELECTED, SELECTED_ALL, DONE, DELETE_SELECTED, DONE_SELECTED, SET_FILTER, SET_FILTER_PRODUCT } from "./bollerplate";
 
 const initState = {
     bindsList: [
@@ -35,7 +35,7 @@ const initState = {
 
 type BindsType = typeof initState
 
-const initFlag = {flagFilter: 'Все'}
+const initFlag = {flagFilter: 'Все', product: []}
 
 export const rootReducer = combineReducers({
     binds: bindsReducer,
@@ -46,6 +46,8 @@ function bindsFlagReducer (state = initFlag, action: any) {
     switch (action.type) {
         case SET_FILTER:
             return ({...state, flagFilter: action.payload})
+        case SET_FILTER_PRODUCT:
+            return ({...state, product: action.payload})
         default: 
             return state
     }

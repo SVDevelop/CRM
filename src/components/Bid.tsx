@@ -45,12 +45,6 @@ export default function Bid ({
 }
 
 function formatDate(date:Date) {
-    // if (!date) {
-    //     console.log(date);
-        
-    //     return ''
-    // }
-
     let dd:number | string = date.getDate();
     if (dd < 10) {
         dd = '0' + dd
